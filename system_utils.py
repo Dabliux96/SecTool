@@ -5,10 +5,10 @@ def generate_system_cmd():
     #cmd = ''
     #return cmd
     
-    def subprocess_command(cmd):
-        
-        system_cmd_base = (subprocess.run([f'{cmd}'], capture_output=True, text=True)).stdout
-        return system_cmd_base
+def subprocess_command(cmd):
+    
+    system_cmd_base = (subprocess.run([f'{cmd}'], capture_output=True, text=True)).stdout
+    return system_cmd_base
 
 
 

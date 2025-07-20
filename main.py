@@ -1,4 +1,4 @@
-import network_utils
+import sectools
+import strings_utils
 
-target_ports = network_utils.get_target_ports()
-print(target_ports)
+sectools.url_bruteforcer()
