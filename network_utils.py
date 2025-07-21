@@ -2,7 +2,6 @@ import socket
 import requests as re
 import system_utils
 import strings_utils
-from pythonping import ping
 
 def get_own_ip_private():
 
@@ -44,6 +43,20 @@ def get_target_ports():
                 break
         else:
             return target_ports
+
+def get_hostname():
+    target_ips = get_target_ip()
+
+    hostnames = {}
+    
+    for target_ip in target_ips:
+
+        hostname = socket.gethostbyaddr(target_ip)[0]
+
+        hostnames[target_ip] = hostname
+        
+    return hostnames
+
 
 def get_url():
     target_url = input("URL: ").strip().lower()
@@ -133,19 +146,5 @@ def get_wordlist():
     
     return wordlist
 
-
 def new_socket():
     return socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-def check_host_online():
-    target_ips = get_target_ip()
-
-    alive_ips = []
-
-    
-    print("Checking if provided IPs are alive...\n")
-
-    for target_ip in target_ips:
-        ping(target_ip, verbose=True)
-
-check_host_online()
