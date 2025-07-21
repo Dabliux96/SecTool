@@ -2,6 +2,7 @@ import socket
 import requests as re
 import system_utils
 import strings_utils
+from pythonping import ping
 
 def get_own_ip_private():
 
@@ -135,3 +136,16 @@ def get_wordlist():
 
 def new_socket():
     return socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+def check_host_online():
+    target_ips = get_target_ip()
+
+    alive_ips = []
+
+    
+    print("Checking if provided IPs are alive...\n")
+
+    for target_ip in target_ips:
+        ping(target_ip, verbose=True)
+
+check_host_online()
