@@ -9,7 +9,11 @@ def subprocess_command(cmd):
     
     system_cmd_base = (subprocess.run([f'{cmd}'], capture_output=True, text=True)).stdout
     return system_cmd_base
-
+    
+def subprocess_command_call(cmd):
+    
+    system_cmd_base = (subprocess.call([f'{cmd}'])).stdout
+    return system_cmd_base
 
 
 
