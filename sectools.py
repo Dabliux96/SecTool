@@ -1,6 +1,11 @@
 import network_utils
+import strings_utils
 import requests as re
 
+###########################
+## URL BRUTEFORCER
+## Scans for URL folders
+###########################
 def url_bruteforcer():
     #Functions calls
     target_url = network_utils.get_url()
@@ -28,28 +33,50 @@ def url_bruteforcer():
     
 
     #Bruteforcer
+    
     scanned_directories = []
 
-    for word in wordlist:
-        for target_port in target_ports:
-            full_target_url = f'{target_url}:{target_port}/{word}'
-            req = re.get(full_target_url)
-            
-            if (req.status_code == 200 and not full_target_url in scanned_directories):
-                print(f'Found: {full_target_url}')
-                scanned_directories.append(full_target_url)
+    for target_port in target_ports:
 
+        port_exists = False
+
+        try:
+            
+            for word in wordlist:
+                
+                full_target_url = f'{target_url}:{target_port}/{word}'
+                req = re.get(full_target_url)
+                
+                if (req.status_code == 200 and not full_target_url in scanned_directories):
+                    if not port_exists:
+                        print(f'\n{strings_utils.separator}\nScanning {target_url}:{target_port}...')
+                        port_exists = True
+
+                    scanned_directories.append(full_target_url)
+
+                    print(f'    * Found: {full_target_url}')
+                    
+
+        except re.exceptions.ConnectionError:
+            continue
+            
+###########################
+## PORT SCANNER
+## Scans for ports
+###########################
 def port_scanner():
     target_ips = network_utils.get_target_ip()
     target_ports = network_utils.get_target_ports()
 
     
-    open_ports = []
-    scanned_ports = []
     scanned_ips = []
 
     for target_ip in target_ips:
-        print(f"Scanning for open ports ({len(target_ports)} ports provided) in {target_ip}...\n")
+        open_ports = []
+        scanned_ports = []
+        
+
+        print(f"\n{strings_utils.separator}\nScanning for open ports ({len(target_ports)} ports provided) in {target_ip}...\n")
         scanned_ips.append(target_ip)
         for target_port in target_ports:
             
@@ -62,9 +89,8 @@ def port_scanner():
                 open_ports.append(target_port)
 
             s.close()
+        print(f"{len(open_ports)} open ports found in {target_ip}.")
         
-    
-   
-        
-
     return target_ports, scanned_ips, scanned_ports, open_ports
+
+
