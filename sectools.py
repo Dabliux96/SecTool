@@ -38,3 +38,33 @@ def url_bruteforcer():
             if (req.status_code == 200 and not full_target_url in scanned_directories):
                 print(f'Found: {full_target_url}')
                 scanned_directories.append(full_target_url)
+
+def port_scanner():
+    target_ips = network_utils.get_target_ip()
+    target_ports = network_utils.get_target_ports()
+
+    
+    open_ports = []
+    scanned_ports = []
+    scanned_ips = []
+
+    for target_ip in target_ips:
+        print(f"Scanning for open ports ({len(target_ports)} ports provided) in {target_ip}...\n")
+        scanned_ips.append(target_ip)
+        for target_port in target_ports:
+            
+            s = network_utils.new_socket()
+            s_connection = s.connect_ex((target_ip, target_port))
+            scanned_ports.append(target_port)
+
+            if s_connection == 0:
+                print(f'{target_port}: Open')
+                open_ports.append(target_port)
+
+            s.close()
+        
+    
+   
+        
+
+    return target_ports, scanned_ips, scanned_ports, open_ports
