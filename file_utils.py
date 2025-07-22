@@ -51,7 +51,7 @@ def calculate_file_hash():
 
 calculate_file_hash()
 
-
+# TO DO: print file hex.
 def get_file_hex():
     pass
 
