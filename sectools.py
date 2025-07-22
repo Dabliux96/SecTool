@@ -1,6 +1,7 @@
 import network_utils
 import strings_utils
 import requests as re
+import file_utils
 
 ###########################
 ## URL BRUTEFORCER
@@ -16,7 +17,7 @@ def url_bruteforcer():
         #Prompt user confirmation for large number of ports
         if len(target_ports) > 10:
 
-            print(f'[WARNING]: High number of ports specified ({len(target_ports)}). This will cause significant delays.')
+            print(f'{strings_utils.warning_message} High number of ports specified ({len(target_ports)}). This will cause significant delays.')
             input_confirm_operation = input('Are you sure? (y/n)').lower().strip()
 
             if input_confirm_operation == 'n':
@@ -94,3 +95,36 @@ def port_scanner():
     return target_ports, scanned_ips, scanned_ports, open_ports
 
 
+def virustotal():
+    #target_ip = network_utils.get_target_ip()
+    File_hashes = file_utils.get_file()
+    #hash_algorithm = file_utils.get_hash_algorithm()
+
+
+    def file_upload():
+        VT_API_URL = '"https://www.virustotal.com/api/v3/files"'
+        
+
+        #upload to VT
+        VT_API_KEY = input('VT API KEY: ')
+        headers = {
+            "accept": "application/json",
+            "x-apikey": VT_API_KEY,
+            "content-type": "multipart/form-data; boundary=--011000010111000001101001"
+        }
+
+        files = file_utils.get_file()
+
+        for file in files:
+            response = re.post(VT_API_URL, data=file, headers=headers)
+
+        return files
+
+    file_upload()
+
+def urlscan():
+    pass
+
+virustotal()
+
+virustotal()
