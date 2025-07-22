@@ -57,7 +57,6 @@ def get_hostname():
         
     return hostnames
 
-
 def get_url():
     target_url = input("URL: ").strip().lower()
 
